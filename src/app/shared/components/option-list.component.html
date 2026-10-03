@@ -1,0 +1,37 @@
+<fieldset class="space-y-3">
+  <legend class="sr-only">Answer options</legend>
+  @for (option of question().options; track option.id) {
+    @let optionState = getOptionState(option);
+    <div
+      class="rounded-lg border p-3 transition-colors sm:p-4"
+      [class]="revealed() ? stateClasses[optionState] : stateClasses.neutral"
+    >
+      @if (question().type === 'multiple_choice') {
+        <mat-checkbox
+          [checked]="selected().includes(option.id)"
+          [disabled]="revealed()"
+          (change)="pick.emit(option.id)"
+          >{{ option.text }}</mat-checkbox
+        >
+      } @else {
+        <mat-radio-button
+          [name]="question().id"
+          [checked]="selected().includes(option.id)"
+          [disabled]="revealed()"
+          (change)="pick.emit(option.id)"
+          >{{ option.text }}</mat-radio-button
+        >
+      }
+      @if (revealed()) {
+        <p class="mt-1 pl-10 text-sm text-muted">
+          @if (stateLabels[optionState]) {
+            <strong class="text-text">{{ stateLabels[optionState] }}.</strong>
+          }
+          @if (showExplanations() && option.explanation) {
+            {{ option.explanation }}
+          }
+        </p>
+      }
+    </div>
+  }
+</fieldset>

@@ -1,0 +1,33 @@
+@if (resultSummary(); as results) {
+  <section class="mx-auto w-full max-w-2xl space-y-7 text-center sm:space-y-8">
+    <h1 class="text-2xl font-semibold">Results</h1>
+    <p class="text-5xl font-bold sm:text-6xl" [class]="hasPassed() ? 'text-success' : 'text-error'">
+      {{ results.scorePercentage }}%
+    </p>
+    <p>
+      {{ results.correctCount }} / {{ results.questionCount }} —
+      {{ hasPassed() ? 'Passed' : 'Not passed' }}(passing score {{ passingScore() }}%)
+    </p>
+    <dl class="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
+      <div class="rounded-lg border border-success bg-success/10 p-3">
+        <dt class="text-sm">Correct</dt>
+        <dd class="text-xl">{{ results.correctCount }}</dd>
+      </div>
+      <div class="rounded-lg border border-error bg-error/10 p-3">
+        <dt class="text-sm">Incorrect</dt>
+        <dd class="text-xl">{{ results.incorrectCount }}</dd>
+      </div>
+      <div class="rounded-lg border border-warning bg-warning/10 p-3">
+        <dt class="text-sm">Unanswered</dt>
+        <dd class="text-xl">{{ results.unansweredCount }}</dd>
+      </div>
+    </dl>
+    <div class="flex flex-col justify-center gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+      <button mat-flat-button(click)="retake()">Retake</button>
+      <a mat-stroked-button routerLink="/review">Review answers</a>
+      <a mat-button routerLink="/">Back to quizzes</a>
+    </div>
+  </section>
+} @else {
+  <p>No results yet. <a routerLink="/" class="text-primary underline">Choose a quiz</a>.</p>
+}

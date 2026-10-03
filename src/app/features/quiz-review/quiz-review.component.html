@@ -1,0 +1,41 @@
+@if (sessionService.session(); as quizSession) {
+  <section class="mx-auto w-full max-w-3xl space-y-6 sm:space-y-8">
+    <h1 class="text-2xl font-semibold">Review: {{ quizSession.quiz.title }}</h1>
+    @for (question of quizSession.quiz.questions; track question.id; let questionIndex = $index) {
+      @let questionStatus = scoringService.status(question, quizSession.answers[question.id]);
+      <article class="space-y-4 rounded-lg border border-border bg-surface p-4 sm:p-5">
+        <h2 class="font-medium">{{ questionIndex + 1 }}. {{ question.question }}</h2>
+        <p
+          class="text-sm font-medium"
+          [class]="
+            questionStatus === 'correct'
+              ? 'text-success'
+              : questionStatus === 'incorrect'
+                ? 'text-error'
+                : 'text-warning'
+          "
+        >
+          {{
+            questionStatus === 'correct'
+              ? 'Correct'
+              : questionStatus === 'incorrect'
+                ? 'Incorrect'
+                : 'Unanswered'
+          }}
+        </p>
+        <app-option-list
+          [question]="question"
+          [selected]="quizSession.answers[question.id] ?? []"
+          [revealed]="true"
+          [showExplanations]="true"
+        />
+        @if (question.explanation) {
+          <p class="text-sm text-muted">{{ question.explanation }}</p>
+        }
+      </article>
+    }
+    <a mat-flat-button routerLink="/results">Back to results</a>
+  </section>
+} @else {
+  <p>Nothing to review.</p>
+}

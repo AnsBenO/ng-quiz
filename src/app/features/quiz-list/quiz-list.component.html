@@ -1,0 +1,71 @@
+<section class="space-y-8">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+    <div class="space-y-1">
+      <h1 class="text-2xl font-semibold">Quizzes</h1>
+      <p class="text-muted">Import a JSON file or pick a quiz to start.</p>
+    </div>
+    <app-quiz-import />
+  </header>
+
+  <mat-card class="bg-surface-container-low!">
+    <mat-card-content class="p-4!">
+      <h2 class="mb-2 font-medium">Settings</h2>
+      <div class="grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+        @for (setting of toggles; track setting.key) {
+          <mat-slide-toggle
+            [checked]="settings()[setting.key]"
+            (change)="updateSetting(setting.key, $event.checked)"
+          >
+            {{ setting.label }}
+          </mat-slide-toggle>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  @if (!quizzes().length) {
+    <p class="rounded-lg border border-border bg-surface p-5 text-center text-muted">
+      No quizzes yet. Import one to begin.
+    </p>
+  }
+  <ul class="grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
+    @for (quiz of quizzes(); track quiz.id) {
+      @let isActive = activeSession()?.quiz?.id === quiz.id;
+      <li>
+        <mat-card
+          class="bg-surface-container-low! h-full"
+          [style.border-color]="isActive ? 'var(--color-primary)' : null"
+        >
+          <mat-card-content class="flex! h-full flex-col gap-5 p-4!">
+            @if (isActive) {
+              <p class="flex items-center gap-2 text-sm font-semibold text-primary">
+                <span class="size-2 rounded-full bg-primary" aria-hidden="true"></span>
+                Active quiz
+              </p>
+            }
+            <div>
+              <h3 class="wrap-break-word text-lg font-medium">{{ quiz.title }}</h3>
+              <p class="text-sm text-muted">{{ quiz.description }}</p>
+            </div>
+            <mat-chip-set aria-label="Quiz details">
+              <mat-chip>{{ quiz.subject }}</mat-chip>
+              @if (quiz.category) {
+                <mat-chip>{{ quiz.category }}</mat-chip>
+              }
+              @if (quiz.difficulty) {
+                <mat-chip>{{ quiz.difficulty }}</mat-chip>
+              }
+              @if (quiz.language) {
+                <mat-chip>{{ quiz.language }}</mat-chip>
+              }
+              <mat-chip>{{ quiz.questions.length }} questions</mat-chip>
+            </mat-chip-set>
+            <button mat-flat-button class="mt-auto self-start" (click)="start(quiz.id)">
+              Start quiz
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </li>
+    }
+  </ul>
+</section>

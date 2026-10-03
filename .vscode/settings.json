@@ -1,0 +1,22 @@
+{
+  "cSpell.words": ["quizforge", "rgba"],
+
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+
+  "editor.formatOnSave": true,
+
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[javascriptjavascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
+}

@@ -1,0 +1,22 @@
+<input
+  id="upload_file"
+  #f
+  type="file"
+  accept=".json,application/json"
+  multiple
+  class="hidden"
+  (change)="onFiles($event)"
+/>
+<button mat-flat-button (click)="f.click()">
+  <mat-icon>upload_file</mat-icon> Import quiz (.json)
+</button>
+@if (errors().length) {
+  <div role="alert" class="mt-4 rounded-lg border border-error bg-error/10 p-4 text-sm">
+    <p class="font-medium">Couldn't import {{ fileName() }}:</p>
+    <ul class="mt-1 list-disc pl-5">
+      @for (errorMessage of errors(); track $index) {
+        <li>{{ errorMessage }}</li>
+      }
+    </ul>
+  </div>
+}

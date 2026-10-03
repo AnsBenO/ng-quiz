@@ -1,0 +1,102 @@
+@if (quizSessionService.session(); as session) {
+  @if (quizSessionService.currentQuestion(); as question) {
+    <section class="mx-auto w-full max-w-3xl space-y-6 sm:space-y-8">
+      <header class="space-y-2">
+        <h1 class="text-xl font-semibold">{{ session.quiz.title }}</h1>
+        <p class="text-sm text-muted" aria-live="polite">
+          Question {{ quizSessionService.questionIndex() + 1 }} of
+          {{ quizSessionService.questionCount() }}
+        </p>
+        <mat-progress-bar
+          mode="determinate"
+          [value]="quizSessionService.progressPercentage()"
+          aria-label="Quiz progress"
+        />
+      </header>
+
+      <h2 class="text-lg leading-relaxed">{{ question.question }}</h2>
+      @if (question.type === 'multiple_choice') {
+        <p class="text-sm text-muted">Select all that apply.</p>
+      }
+
+      <app-option-list
+        [question]="question"
+        [selected]="quizSessionService.selectedOptionIds()"
+        [revealed]="quizSessionService.isCurrentQuestionChecked()"
+        [showExplanations]="session.settings.showExplanations"
+        (pick)="quizSessionService.select($event)"
+      />
+
+      @if (quizSessionService.isCurrentQuestionChecked()) {
+        <output
+          class="block rounded-lg border p-3 font-medium"
+          [class]="
+            questionResult() === 'correct'
+              ? 'border-success bg-success/10'
+              : 'border-error bg-error/10'
+          "
+        >
+          {{ questionResult() === 'correct' ? 'Correct!' : 'Not quite.' }}
+        </output>
+        @if (session.settings.showExplanations && question.explanation) {
+          <p class="text-sm text-muted">{{ question.explanation }}</p>
+        }
+      }
+
+      @if (
+        session.settings.showHints &&
+        question.hint &&
+        !quizSessionService.isCurrentQuestionChecked()
+      ) {
+        <button
+          mat-button
+          (click)="isHintVisible.set(!isHintVisible())"
+          [attr.aria-expanded]="isHintVisible()"
+        >
+          {{ isHintVisible() ? 'Hide hint' : 'Show hint' }}
+        </button>
+        @if (isHintVisible()) {
+          <p class="rounded-lg border border-info bg-info/10 p-3 text-sm">{{ question.hint }}</p>
+        }
+      }
+
+      <footer
+        class="flex flex-col gap-3 border-t border-border pt-4 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <button
+          mat-stroked-button
+          [disabled]="quizSessionService.questionIndex() === 0"
+          (click)="quizSessionService.moveQuestionIndex(-1)"
+        >
+          Previous
+        </button>
+        <div class="flex flex-wrap gap-2 sm:justify-end">
+          @if (!quizSessionService.isCurrentQuestionChecked()) {
+            <button
+              mat-stroked-button
+              [disabled]="!quizSessionService.selectedOptionIds().length"
+              (click)="quizSessionService.check()"
+            >
+              Check answer
+            </button>
+          }
+          @if (quizSessionService.questionIndex() < quizSessionService.questionCount() - 1) {
+            <button
+              mat-flat-button
+              [disabled]="isAnswerBlocked()"
+              (click)="quizSessionService.moveQuestionIndex(1)"
+            >
+              Next
+            </button>
+          } @else {
+            <button mat-flat-button [disabled]="isAnswerBlocked()" (click)="finish()">
+              Finish
+            </button>
+          }
+        </div>
+      </footer>
+    </section>
+  }
+} @else {
+  <p>No active quiz. <a class="text-primary underline" routerLink="/">Choose one</a>.</p>
+}

@@ -1,0 +1,57 @@
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        theme-type: color-scheme,
+        primary: mat.$cyan-palette,
+        tertiary: mat.$orange-palette
+      ),
+      typography: (
+        plain-family: 'DM Sans, sans-serif',
+        brand-family: 'DM Sans, sans-serif'
+      ),
+      density: 0
+    )
+  );
+  @include mat.theme-overrides(
+    (
+      primary: var(--color-primary),
+      on-primary: var(--color-on-primary),
+      primary-container: var(--color-primary-container),
+      on-primary-container: var(--color-on-primary-container),
+      secondary: var(--color-secondary),
+      on-secondary: var(--color-on-secondary),
+      secondary-container: var(--color-secondary-container),
+      on-secondary-container: var(--color-on-secondary-container),
+      tertiary: var(--color-accent),
+      on-tertiary: var(--color-on-accent),
+      tertiary-container: var(--color-accent-container),
+      on-tertiary-container: var(--color-on-accent-container),
+      error: var(--color-error),
+      on-error: var(--color-on-error),
+      surface: var(--color-surface),
+      on-surface: var(--color-text),
+      on-surface-variant: var(--color-muted),
+      surface-dim: var(--color-background),
+      surface-bright: var(--color-surface-container-lowest),
+      surface-container-lowest: var(--color-surface-container-lowest),
+      surface-container-low: var(--color-surface-container-low),
+      surface-container: var(--color-surface-container),
+      surface-container-high: var(--color-surface-container-high),
+      surface-container-highest: var(--color-surface-container-highest),
+      outline: var(--color-muted),
+      outline-variant: var(--color-border)
+    )
+  );
+}
+
+body {
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  margin: 0;
+  height: 100%;
+}
