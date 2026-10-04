@@ -82,6 +82,7 @@
           }
           @if (quizSessionService.questionIndex() < quizSessionService.questionCount() - 1) {
             <button
+              class="grow"
               mat-flat-button
               [disabled]="isAnswerBlocked()"
               (click)="quizSessionService.moveQuestionIndex(1)"

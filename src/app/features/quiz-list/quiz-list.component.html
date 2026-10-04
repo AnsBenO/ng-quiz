@@ -28,12 +28,12 @@
       No quizzes yet. Import one to begin.
     </p>
   }
-  <ul class="grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
+  <ul class="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
     @for (quiz of quizzes(); track quiz.id) {
       @let isActive = activeSession()?.quiz?.id === quiz.id;
-      <li>
+      <li class="min-w-0">
         <mat-card
-          class="bg-surface-container-low! h-full"
+          class="bg-surface-container-low! h-full min-w-0"
           [style.border-color]="isActive ? 'var(--color-primary)' : null"
         >
           <mat-card-content class="flex! h-full flex-col gap-5 p-4!">
@@ -45,7 +45,7 @@
             }
             <div>
               <h3 class="wrap-break-word text-lg font-medium">{{ quiz.title }}</h3>
-              <p class="text-sm text-muted">{{ quiz.description }}</p>
+              <p class="wrap-break-word text-sm text-muted">{{ quiz.description }}</p>
             </div>
             <mat-chip-set aria-label="Quiz details">
               <mat-chip>{{ quiz.subject }}</mat-chip>
