@@ -1,106 +1,160 @@
 import { Injectable } from '@angular/core';
 import { QUESTION_TYPES, QuestionType } from '../models/quiz.models';
 
-type ValidationRecord = Record<string, any>;
+// ---------- Raw (unvalidated) shapes ----------
+
+type RawQuiz = Partial<Record<'id' | 'title' | 'subject' | 'questions', unknown>>;
+type RawQuestion = Partial<Record<'id' | 'question' | 'type' | 'correctAnswers' | 'options', unknown>>;
+type RawOption = Partial<Record<'id' | 'text', unknown>>;
+
+// ---------- Small helpers ----------
+
+/** Returns the value typed as T if it is a non-null object, otherwise null. */
+const asObject = <T>(value: unknown): T | null =>
+  typeof value === 'object' && value !== null ? (value as T) : null;
+
 const isNonEmptyString = (value: unknown): value is string =>
   typeof value === 'string' && value.trim().length > 0;
+
+const isQuestionType = (value: unknown): value is QuestionType =>
+  QUESTION_TYPES.some((type) => type === value);
+
+// ---------- Constants ----------
+
+const REQUIRED_QUIZ_FIELDS = ['id', 'title', 'subject'] as const;
+
+/** true_false questions may omit options; the parser adds these defaults. */
+const DEFAULT_TRUE_FALSE_OPTIONS = [
+  { id: 'true', text: 'True' },
+  { id: 'false', text: 'False' }
+];
 
 /** Per-type rules: add a new question type by adding one entry. */
 const TYPE_RULES: Record<
   QuestionType,
-  (questionRecord: ValidationRecord, questionLabel: string) => string[]
+  { isValidCount: (correctCount: number) => boolean; message: string }
 > = {
-  single_choice: (questionRecord, questionLabel) =>
-    questionRecord['correctAnswers']?.length === 1
-      ? []
-      : [`${questionLabel}: single_choice needs exactly one correct answer.`],
-  multiple_choice: (questionRecord, questionLabel) =>
-    questionRecord['correctAnswers']?.length >= 1
-      ? []
-      : [`${questionLabel}: multiple_choice needs at least one correct answer.`],
-  true_false: (questionRecord, questionLabel) =>
-    questionRecord['correctAnswers']?.length === 1
-      ? []
-      : [`${questionLabel}: true_false needs exactly one correct answer.`]
+  single_choice: {
+    isValidCount: (count) => count === 1,
+    message: 'single_choice needs exactly one correct answer.'
+  },
+  multiple_choice: {
+    isValidCount: (count) => count >= 1,
+    message: 'multiple_choice needs at least one correct answer.'
+  },
+  true_false: {
+    isValidCount: (count) => count === 1,
+    message: 'true_false needs exactly one correct answer.'
+  }
 };
+
+// ---------- Service ----------
 
 @Injectable({ providedIn: 'root' })
 export class QuizValidatorService {
-  validate(quizDataInput: unknown): string[] {
-    const validationErrors: string[] = [];
-    if (!quizDataInput || typeof quizDataInput !== 'object') return ['Quiz must be a JSON object.'];
-    const quizRecord = quizDataInput as ValidationRecord;
-    for (const fieldName of ['id', 'title', 'subject'])
-      if (!isNonEmptyString(quizRecord[fieldName]))
-        validationErrors.push(`Quiz: "${fieldName}" is required.`);
-    if (!Array.isArray(quizRecord['questions']) || quizRecord['questions'].length === 0) {
-      validationErrors.push('Quiz: "questions" must be a non-empty array.');
-      return validationErrors;
+  /** Returns a list of human-readable errors; an empty list means the quiz is valid. */
+  validate(quizData: unknown): string[] {
+    const quiz = asObject<RawQuiz>(quizData);
+    if (!quiz) return ['Quiz must be a JSON object.'];
+
+    const errors = REQUIRED_QUIZ_FIELDS
+      .filter((field) => !isNonEmptyString(quiz[field]))
+      .map((field) => `Quiz: "${field}" is required.`);
+
+    const { questions } = quiz;
+    if (!Array.isArray(questions) || questions.length === 0) {
+      return [...errors, 'Quiz: "questions" must be a non-empty array.'];
     }
-    const questionIds = new Set<string>();
-    quizRecord['questions'].forEach((questionRecord: ValidationRecord, questionIndex: number) => {
-      const questionLabel = `Question ${questionIndex + 1}`;
-      if (!questionRecord || typeof questionRecord !== 'object') {
-        validationErrors.push(`${questionLabel}: must be an object.`);
-        return;
-      }
-      if (!isNonEmptyString(questionRecord['id'])) {
-        validationErrors.push(`${questionLabel}: "id" is required.`);
-      } else if (questionIds.has(questionRecord['id'])) {
-        validationErrors.push(`${questionLabel}: duplicate id "${questionRecord['id']}".`);
-      } else {
-        questionIds.add(questionRecord['id']);
-      }
-      if (!isNonEmptyString(questionRecord['question']))
-        validationErrors.push(`${questionLabel}: "question" text is required.`);
-      if (!QUESTION_TYPES.includes(questionRecord['type'])) {
-        validationErrors.push(`${questionLabel}: unknown type "${questionRecord['type']}".`);
-        return;
-      }
-      if (!Array.isArray(questionRecord['correctAnswers'])) {
-        validationErrors.push(`${questionLabel}: "correctAnswers" must be an array.`);
-        return;
-      }
-      // true_false may omit options(defaults are added by the parser)
-      const options: ValidationRecord[] =
-        questionRecord['options'] ??
-        (questionRecord['type'] === 'true_false'
-          ? [
-            { id: 'true', text: 'True' },
-            { id: 'false', text: 'False' }
-          ]
-          : []);
-      if (!Array.isArray(options) || options.length < 2) {
-        validationErrors.push(`${questionLabel}: needs at least 2 options.`);
-        return;
-      }
-      const optionIds = new Set<string>();
-      options.forEach((optionRecord, optionIndex) => {
-        if (
-          !optionRecord ||
-          !isNonEmptyString(optionRecord['id']) ||
-          !isNonEmptyString(optionRecord['text'])
-        ) {
-          validationErrors.push(
-            `${questionLabel}, option ${optionIndex + 1}: "id" and "text" are required.`
-          );
-        } else if (optionIds.has(optionRecord['id'])) {
-          validationErrors.push(`${questionLabel}: duplicate option id "${optionRecord['id']}".`);
-        } else {
-          optionIds.add(optionRecord['id']);
-        }
-      });
-      const invalidCorrectAnswerIds = questionRecord['correctAnswers'].filter(
-        (answerId: string) => !optionIds.has(answerId)
-      );
-      if (invalidCorrectAnswerIds.length)
-        validationErrors.push(
-          `${questionLabel}: correctAnswers reference unknown option(s): ${invalidCorrectAnswerIds.join(', ')}.`
-        );
-      validationErrors.push(
-        ...TYPE_RULES[questionRecord['type'] as QuestionType](questionRecord, questionLabel)
-      );
+
+    const seenQuestionIds = new Set<string>();
+    questions.forEach((question: unknown, index: number) => {
+      errors.push(...this.validateQuestion(question, `Question ${index + 1}`, seenQuestionIds));
     });
-    return validationErrors;
+
+    return errors;
+  }
+
+  private validateQuestion(value: unknown, label: string, seenIds: Set<string>): string[] {
+    const question = asObject<RawQuestion>(value);
+    if (!question) return [`${label}: must be an object.`];
+
+    const errors: string[] = [];
+
+    // id
+    const { id } = question;
+    if (!isNonEmptyString(id)) {
+      errors.push(`${label}: "id" is required.`);
+    } else if (seenIds.has(id)) {
+      errors.push(`${label}: duplicate id "${id}".`);
+    } else {
+      seenIds.add(id);
+    }
+
+    // text
+    if (!isNonEmptyString(question.question)) {
+      errors.push(`${label}: "question" text is required.`);
+    }
+
+    // type
+    const { type } = question;
+    if (!isQuestionType(type)) {
+      errors.push(`${label}: unknown type "${type}".`);
+      return errors;
+    }
+
+    // correctAnswers
+    const { correctAnswers } = question;
+    if (!Array.isArray(correctAnswers)) {
+      errors.push(`${label}: "correctAnswers" must be an array.`);
+      return errors;
+    }
+
+    // options
+    const options = question.options ?? (type === 'true_false' ? DEFAULT_TRUE_FALSE_OPTIONS : []);
+    if (!Array.isArray(options) || options.length < 2) {
+      errors.push(`${label}: needs at least 2 options.`);
+      return errors;
+    }
+    const { optionIds, errors: optionErrors } = this.validateOptions(options, label);
+    errors.push(...optionErrors);
+
+    // correct answers must point at existing options
+    const unknownAnswers = correctAnswers.filter(
+      (answer: unknown) => typeof answer !== 'string' || !optionIds.has(answer)
+    );
+    if (unknownAnswers.length) {
+      errors.push(`${label}: correctAnswers reference unknown option(s): ${unknownAnswers.join(', ')}.`);
+    }
+
+    // type-specific rule
+    const rule = TYPE_RULES[type];
+    if (!rule.isValidCount(correctAnswers.length)) {
+      errors.push(`${label}: ${rule.message}`);
+    }
+
+    return errors;
+  }
+
+  private validateOptions(
+    options: unknown[],
+    questionLabel: string
+  ): { optionIds: Set<string>; errors: string[] } {
+    const optionIds = new Set<string>();
+    const errors: string[] = [];
+
+    options.forEach((value: unknown, index: number) => {
+      const option = asObject<RawOption>(value);
+      const { id, text } = option ?? {};
+
+      if (!isNonEmptyString(id) || !isNonEmptyString(text)) {
+        errors.push(`${questionLabel}, option ${index + 1}: "id" and "text" are required.`);
+      } else if (optionIds.has(id)) {
+        errors.push(`${questionLabel}: duplicate option id "${id}".`);
+      } else {
+        optionIds.add(id);
+      }
+    });
+
+    return { optionIds, errors };
   }
 }
