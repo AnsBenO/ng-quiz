@@ -25,7 +25,7 @@ export class App {
   private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
   readonly colorMode = signal<ColorMode>('system');
-  readonly colorPalette = signal<ColorPalette>('ocean');
+  readonly colorPalette = signal<ColorPalette>('amber');
   private readonly systemPrefersDark = signal(true);
 
   constructor() {

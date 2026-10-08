@@ -28,6 +28,14 @@ describe('App', () => {
     expect(compiled.querySelector('button[aria-label="Theme settings"]')).toBeTruthy();
   });
 
+  it('should use Amber when no palette preference is saved', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+
+    expect(app.colorPalette()).toBe('amber');
+    expect(document.documentElement.dataset['palette']).toBe('amber');
+  });
+
   it('should migrate a saved legacy mode preference', () => {
     localStorage.setItem('quizforge-theme', 'light');
 
