@@ -12,13 +12,82 @@
     <button
       mat-icon-button
       type="button"
-      [attr.aria-label]="darkMode() ? 'Switch to light mode' : 'Switch to dark mode'"
-      [attr.title]="darkMode() ? 'Switch to light mode' : 'Switch to dark mode'"
-      [attr.aria-pressed]="darkMode()"
-      (click)="toggleTheme()"
+      [matMenuTriggerFor]="themeMenu"
+      aria-label="Theme settings"
+      title="Theme settings"
     >
-      <mat-icon>{{ darkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      <mat-icon>contrast</mat-icon>
     </button>
+    <mat-menu #themeMenu="matMenu" class="theme-menu-panel" xPosition="before">
+      <div class="theme-menu-heading" aria-hidden="true">Color mode</div>
+      <button
+        mat-menu-item
+        role="menuitemradio"
+        [attr.aria-checked]="colorMode() === 'system'"
+        (click)="setColorMode('system')"
+      >
+        <mat-icon>{{ colorMode() === 'system' ? 'check' : 'computer' }}</mat-icon>
+        <span>System</span>
+      </button>
+      <button
+        mat-menu-item
+        role="menuitemradio"
+        [attr.aria-checked]="colorMode() === 'light'"
+        (click)="setColorMode('light')"
+      >
+        <mat-icon>{{ colorMode() === 'light' ? 'check' : 'light_mode' }}</mat-icon>
+        <span>Light</span>
+      </button>
+      <button
+        mat-menu-item
+        role="menuitemradio"
+        [attr.aria-checked]="colorMode() === 'dark'"
+        (click)="setColorMode('dark')"
+      >
+        <mat-icon>{{ colorMode() === 'dark' ? 'check' : 'dark_mode' }}</mat-icon>
+        <span>Dark</span>
+      </button>
+
+      <mat-divider />
+
+      <div class="theme-menu-heading" aria-hidden="true">Color palette</div>
+      <button
+        mat-menu-item
+        role="menuitemradio"
+        [attr.aria-checked]="colorPalette() === 'ocean'"
+        (click)="setColorPalette('ocean')"
+      >
+        <mat-icon>{{ colorPalette() === 'ocean' ? 'check' : 'water' }}</mat-icon>
+        <span>Ocean</span>
+      </button>
+      <button
+        mat-menu-item
+        role="menuitemradio"
+        [attr.aria-checked]="colorPalette() === 'forest'"
+        (click)="setColorPalette('forest')"
+      >
+        <mat-icon>{{ colorPalette() === 'forest' ? 'check' : 'park' }}</mat-icon>
+        <span>Forest</span>
+      </button>
+      <button
+        mat-menu-item
+        role="menuitemradio"
+        [attr.aria-checked]="colorPalette() === 'violet'"
+        (click)="setColorPalette('violet')"
+      >
+        <mat-icon>{{ colorPalette() === 'violet' ? 'check' : 'auto_awesome' }}</mat-icon>
+        <span>Violet</span>
+      </button>
+      <button
+        mat-menu-item
+        role="menuitemradio"
+        [attr.aria-checked]="colorPalette() === 'amber'"
+        (click)="setColorPalette('amber')"
+      >
+        <mat-icon>{{ colorPalette() === 'amber' ? 'check' : 'wb_sunny' }}</mat-icon>
+        <span>Amber</span>
+      </button>
+    </mat-menu>
   </nav>
 </header>
 <main class="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">

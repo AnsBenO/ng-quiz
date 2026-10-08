@@ -8,10 +8,246 @@
   --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
 
   /* ─────────────────────────────────────────
-     Primary — Indigo
+     Primary — Deep Ocean Blue
      Main brand / CTA / navigation
      ───────────────────────────────────────── */
 
+  --color-primary: #2563eb;
+  --color-on-primary: #ffffff;
+
+  --color-primary-container: #172554;
+  --color-on-primary-container: #dbeafe;
+
+  /* ─────────────────────────────────────────
+     Secondary — Ocean Cyan
+     Interactive / progress / links
+     ───────────────────────────────────────── */
+
+  --color-secondary: #0891b2;
+  --color-on-secondary: #00222b;
+
+  --color-secondary-container: #164e63;
+  --color-on-secondary-container: #cffafe;
+
+  /* ─────────────────────────────────────────
+     Accent — Indigo
+     Streaks / XP / achievements / highlights
+     ───────────────────────────────────────── */
+
+  --color-accent: #6366f1;
+  --color-on-accent: #ffffff;
+
+  --color-accent-container: #312e81;
+  --color-on-accent-container: #e0e7ff;
+
+  /* ─────────────────────────────────────────
+     Quiz states
+     ───────────────────────────────────────── */
+
+  --color-correct: #10b981;
+  --color-correct-container: rgba(16, 185, 129, 0.15);
+
+  --color-incorrect: #f43f5e;
+  --color-incorrect-container: rgba(244, 63, 94, 0.15);
+
+  --color-selected: #06b6d4;
+  --color-selected-container: rgba(6, 182, 212, 0.18);
+
+  --color-timer: #38bdf8;
+  --color-timer-urgent: #fb7185;
+
+  /* ─────────────────────────────────────────
+     General semantic colors
+     ───────────────────────────────────────── */
+
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #f43f5e;
+  --color-on-error: #ffffff;
+  --color-info: #38bdf8;
+
+  /* ─────────────────────────────────────────
+     Dark Ocean surfaces
+     ───────────────────────────────────────── */
+
+  --color-background: #050b18;
+
+  --color-surface: rgba(10, 20, 40, 0.82);
+
+  --color-surface-container-lowest: #050b18;
+  --color-surface-container-low: #081225;
+  --color-surface-container: #0d1930;
+  --color-surface-container-high: #142344;
+  --color-surface-container-highest: #1c2f55;
+
+  /* ─────────────────────────────────────────
+     Text
+     ───────────────────────────────────────── */
+
+  --color-text: #f1f5ff;
+  --color-muted: #94a3b8;
+  --color-border: rgba(129, 140, 248, 0.18);
+
+  /* ─────────────────────────────────────────
+     Effects
+     ───────────────────────────────────────── */
+
+  --color-shadow: rgba(0, 0, 0, 0.48);
+
+  --color-glow-primary: rgba(37, 99, 235, 0.16);
+  --color-glow-secondary: rgba(8, 145, 178, 0.11);
+  --color-glow-accent: rgba(99, 102, 241, 0.15);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  /* ─────────────────────────────────────────
+     Primary
+     ───────────────────────────────────────── */
+
+  --color-primary: #1d4ed8;
+  --color-on-primary: #ffffff;
+
+  --color-primary-container: #dbeafe;
+  --color-on-primary-container: #172554;
+
+  /* ─────────────────────────────────────────
+     Secondary
+     ───────────────────────────────────────── */
+
+  --color-secondary: #0e7490;
+  --color-on-secondary: #ffffff;
+
+  --color-secondary-container: #cffafe;
+  --color-on-secondary-container: #164e63;
+
+  /* ─────────────────────────────────────────
+     Accent — Indigo
+     ───────────────────────────────────────── */
+
+  --color-accent: #4f46e5;
+  --color-on-accent: #ffffff;
+
+  --color-accent-container: #e0e7ff;
+  --color-on-accent-container: #312e81;
+
+  /* ─────────────────────────────────────────
+     Quiz states
+     ───────────────────────────────────────── */
+
+  --color-correct: #15803d;
+  --color-correct-container: #dcfce7;
+
+  --color-incorrect: #be123c;
+  --color-incorrect-container: #ffe4e6;
+
+  --color-selected: #0e7490;
+  --color-selected-container: #cffafe;
+
+  --color-timer: #0369a1;
+  --color-timer-urgent: #e11d48;
+
+  /* ─────────────────────────────────────────
+     General semantic colors
+     ───────────────────────────────────────── */
+
+  --color-success: #15803d;
+  --color-warning: #b45309;
+  --color-error: #be123c;
+  --color-on-error: #ffffff;
+  --color-info: #0369a1;
+
+  /* ─────────────────────────────────────────
+     Light Ocean surfaces
+     ───────────────────────────────────────── */
+
+  --color-background: #f5f8ff;
+
+  --color-surface: rgba(255, 255, 255, 0.9);
+
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f8faff;
+  --color-surface-container: #eef2ff;
+  --color-surface-container-high: #e2e8f8;
+  --color-surface-container-highest: #d4dcf0;
+
+  /* ─────────────────────────────────────────
+     Text
+     ───────────────────────────────────────── */
+
+  --color-text: #111827;
+  --color-muted: #64748b;
+  --color-border: rgba(30, 41, 59, 0.14);
+
+  /* ─────────────────────────────────────────
+     Effects
+     ───────────────────────────────────────── */
+
+  --color-shadow: rgba(15, 23, 42, 0.1);
+
+  --color-glow-primary: rgba(37, 99, 235, 0.09);
+  --color-glow-secondary: rgba(8, 145, 178, 0.07);
+  --color-glow-accent: rgba(79, 70, 229, 0.1);
+}
+
+[data-palette='forest'] {
+  --color-surface: rgba(16, 35, 25, 0.9);
+  --color-surface-container-lowest: #0c1d14;
+  --color-surface-container-low: #12271b;
+  --color-surface-container: #193323;
+  --color-surface-container-high: #24452f;
+  --color-surface-container-highest: #31583d;
+  --color-primary: #22c55e;
+  --color-on-primary: #052e16;
+  --color-primary-container: #14532d;
+  --color-on-primary-container: #dcfce7;
+  --color-secondary: #a3e635;
+  --color-on-secondary: #1a2e05;
+  --color-secondary-container: #365314;
+  --color-on-secondary-container: #ecfccb;
+  --color-accent: #84cc16;
+  --color-on-accent: #1a2e05;
+  --color-accent-container: #365314;
+  --color-on-accent-container: #ecfccb;
+  --color-selected: #4ade80;
+  --color-selected-container: rgba(74, 222, 128, 0.18);
+  --color-glow-primary: rgba(34, 197, 94, 0.14);
+  --color-glow-secondary: rgba(163, 230, 53, 0.1);
+  --color-glow-accent: rgba(132, 204, 22, 0.12);
+}
+
+[data-theme='light'][data-palette='forest'] {
+  --color-surface: rgba(243, 250, 244, 0.92);
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f8fcf8;
+  --color-surface-container: #edf5ee;
+  --color-surface-container-high: #e1ede3;
+  --color-surface-container-highest: #d4e3d7;
+  --color-primary: #15803d;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #dcfce7;
+  --color-on-primary-container: #14532d;
+  --color-secondary: #4d7c0f;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #ecfccb;
+  --color-on-secondary-container: #365314;
+  --color-accent: #65a30d;
+  --color-on-accent: #1a2e05;
+  --color-accent-container: #ecfccb;
+  --color-on-accent-container: #365314;
+  --color-selected: #15803d;
+  --color-selected-container: #dcfce7;
+  --color-glow-primary: rgba(21, 128, 61, 0.08);
+  --color-glow-secondary: rgba(77, 124, 15, 0.06);
+  --color-glow-accent: rgba(101, 163, 13, 0.08);
+}
+
+[data-palette='violet'] {
   --color-primary: #6366f1;
   --color-on-primary: #ffffff;
   --color-primary-container: #312e81;
@@ -97,11 +333,7 @@
   --color-glow-accent: rgba(251, 191, 36, 0.12);
 }
 
-:root {
-  color-scheme: dark;
-}
-
-[data-theme='light'] {
+[data-theme='light'][data-palette='violet'] {
   color-scheme: light;
 
   /* ─────────────────────────────────────────
@@ -190,6 +422,59 @@
   --color-glow-secondary: rgba(8, 145, 178, 0.06);
   --color-glow-accent: rgba(180, 83, 9, 0.08);
 }
+
+[data-palette='amber'] {
+  --color-surface: rgba(24, 27, 36, 0.92);
+  --color-surface-container-lowest: #111318;
+  --color-surface-container-low: #191c24;
+  --color-surface-container: #222630;
+  --color-surface-container-high: #2d323e;
+  --color-surface-container-highest: #393f4c;
+  --color-primary: #fbbf24;
+  --color-on-primary: #422006;
+  --color-primary-container: #78350f;
+  --color-on-primary-container: #fef3c7;
+  --color-secondary: #fb923c;
+  --color-on-secondary: #431407;
+  --color-secondary-container: #7c2d12;
+  --color-on-secondary-container: #ffedd5;
+  --color-accent: #f59e0b;
+  --color-on-accent: #451a03;
+  --color-accent-container: #78350f;
+  --color-on-accent-container: #fef3c7;
+  --color-selected: #fbbf24;
+  --color-selected-container: rgba(251, 191, 36, 0.18);
+  --color-glow-primary: rgba(251, 191, 36, 0.14);
+  --color-glow-secondary: rgba(251, 146, 60, 0.1);
+  --color-glow-accent: rgba(245, 158, 11, 0.12);
+}
+
+[data-theme='light'][data-palette='amber'] {
+  --color-surface: rgba(250, 251, 253, 0.94);
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f8f9fb;
+  --color-surface-container: #f0f2f5;
+  --color-surface-container-high: #e6e9ee;
+  --color-surface-container-highest: #dce0e7;
+  --color-primary: #b45309;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #ffedd5;
+  --color-on-primary-container: #7c2d12;
+  --color-secondary: #c2410c;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #ffedd5;
+  --color-on-secondary-container: #7c2d12;
+  --color-accent: #a16207;
+  --color-on-accent: #ffffff;
+  --color-accent-container: #fef3c7;
+  --color-on-accent-container: #78350f;
+  --color-selected: #b45309;
+  --color-selected-container: #ffedd5;
+  --color-glow-primary: rgba(180, 83, 9, 0.09);
+  --color-glow-secondary: rgba(194, 65, 12, 0.07);
+  --color-glow-accent: rgba(161, 98, 7, 0.1);
+}
+
 body {
   min-height: 100vh;
   font-family: var(--font-sans);
@@ -262,6 +547,46 @@ app-root {
   --mat-slide-toggle-selected-hover-handle-color: var(--color-on-primary-container);
   --mat-slide-toggle-selected-pressed-handle-color: var(--color-on-primary-container);
   --mat-slide-toggle-selected-icon-color: var(--color-on-secondary);
+}
+
+.theme-menu-panel.mat-mdc-menu-panel {
+  min-width: 200px;
+  max-width: 200px;
+  padding: 0.35rem;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 0.85rem;
+  background: var(--color-surface-container-low);
+  color: var(--color-text);
+  box-shadow: 0 12px 28px var(--color-shadow);
+}
+
+.theme-menu-panel .mat-mdc-menu-content {
+  padding: 0;
+}
+
+.theme-menu-panel .mat-mdc-menu-item {
+  min-height: 40px;
+  border-radius: 0.55rem;
+  font-weight: 600;
+}
+
+.theme-menu-panel .mat-mdc-menu-item .mat-icon {
+  color: var(--color-muted);
+}
+
+.theme-menu-heading {
+  padding: 0.45rem 0.8rem 0.2rem;
+  color: var(--color-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.theme-menu-panel mat-divider {
+  margin: 0.35rem 0.65rem;
+  border-color: var(--color-border);
 }
 
 /* Custom Sleek Scrollbar */
