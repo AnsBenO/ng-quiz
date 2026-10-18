@@ -2,11 +2,12 @@ import { Injectable, signal } from '@angular/core';
 import { SERVICENOW_CSA_QUIZ } from '../data/servicenow-csa-quiz';
 import { Quiz } from '../models/quiz.models';
 import { CSA_PRACTICE_EXAM } from '../data/servicenow-csa-practice-exam';
+import { SERVICENOW_CATALOG_QUIZ } from '../data/servicenow-catalog-quiz';
 
 /** Holds available quiz definitions. Swap internals for persistence/HTTP later. */
 @Injectable({ providedIn: 'root' })
 export class QuizService {
-  private readonly quizzesSignal = signal<Quiz[]>([SERVICENOW_CSA_QUIZ, CSA_PRACTICE_EXAM]);
+  private readonly quizzesSignal = signal<Quiz[]>([SERVICENOW_CSA_QUIZ, CSA_PRACTICE_EXAM, SERVICENOW_CATALOG_QUIZ]);
   readonly quizzes = this.quizzesSignal.asReadonly();
 
   add(quiz: Quiz) {
