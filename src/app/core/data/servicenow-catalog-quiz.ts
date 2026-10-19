@@ -1,615 +1,405 @@
 import { Quiz } from "../models/quiz.models";
 
 export const SERVICENOW_CATALOG_QUIZ: Quiz = {
-      id: 'servicenow-service-catalog-lab',
-      title: 'ServiceNow Service Catalog: Variable Sets, Order Guides & Record Producers',
-      description:
-            'Practice the concepts from the onboarding lab: variable sets, catalog items, order guides, record producers, and the REQ / RITM / SCTASK lifecycle.',
-      subject: 'ServiceNow',
-      category: 'Service Catalog',
-      difficulty: 'intermediate',
-      language: 'en',
-      passingScore: 70,
-      questions: [
-            // ───────────── Step 1: Variable Sets & Catalog Variables ─────────────
-            {
-                  id: 'q1',
-                  type: 'single_choice',
-                  question: 'What is a Variable Set in the Service Catalog?',
-                  options: [
-                        { id: 'a', text: 'A single question displayed on one catalog form only' },
-                        { id: 'b', text: 'A reusable collection of catalog variables that can be attached to supported catalog forms' },
-                        { id: 'c', text: 'A script that sets field values on the Incident table' },
-                        { id: 'd', text: 'A list of rules that decides which items appear in an order guide' }
-                  ],
-                  correctAnswers: ['b'],
-                  hint: 'Think "define once, reuse everywhere".',
-                  explanation:
-                        'A Variable Set groups catalog variables so you can define the questions once and reuse them across multiple items and order guides.',
-                  tags: ['variable-set', 'definitions']
-            },
-            {
-                  id: 'q2',
-                  type: 'single_choice',
-                  question:
-                        'Which type of variable set did you create to hold the employee first and last names in the lab?',
-                  options: [
-                        { id: 'a', text: 'Multi-Row Variable Set (MRVS)' },
-                        { id: 'b', text: 'Record Variable Set' },
-                        { id: 'c', text: 'Single-Row Variable Set' },
-                        { id: 'd', text: 'Script Variable Set' }
-                  ],
-                  correctAnswers: ['c'],
-                  hint: 'There is one set of fields, and one employee per order.',
-                  explanation:
-                        'A Single-Row Variable Set groups related variables into a single set of fields, which is what you need for one employee\'s first and last name.',
-                  tags: ['variable-set', 'single-row']
-            },
-            {
-                  id: 'q3',
-                  type: 'true_false',
-                  question:
-                        'A Multi-Row Variable Set (MRVS) lets users enter multiple rows of related data, such as several devices or several employees.',
-                  options: [
-                        { id: 'true', text: 'True' },
-                        { id: 'false', text: 'False' }
-                  ],
-                  correctAnswers: ['true'],
-                  explanation:
-                        'That is exactly the purpose of an MRVS, as opposed to a Single-Row Variable Set, which holds just one set of values.',
-                  tags: ['variable-set', 'mrvs']
-            },
-            {
-                  id: 'q4',
-                  type: 'multiple_choice',
-                  question: 'Which are benefits of using a Variable Set? (Select all that apply)',
-                  options: [
-                        { id: 'a', text: 'Questions are defined once and managed centrally' },
-                        { id: 'b', text: 'The same set can be attached to multiple catalog items' },
-                        { id: 'c', text: 'It automatically creates a Catalog Task for every item' },
-                        { id: 'd', text: 'It can also be attached to an order guide' }
-                  ],
-                  correctAnswers: ['a', 'b', 'd'],
-                  explanation:
-                        'Variable sets provide reuse and central management. They have nothing to do with creating Catalog Tasks, which depend on fulfillment configuration.',
-                  tags: ['variable-set', 'reuse']
-            },
-            {
-                  id: 'q5',
-                  type: 'single_choice',
-                  question: 'Which navigation path leads to the list of Variable Sets?',
-                  options: [
-                        { id: 'a', text: 'All → Service Catalog → Catalog Definition → Maintain Items' },
-                        { id: 'b', text: 'All → Service Catalog → Catalog Variables → Variable Sets' },
-                        { id: 'c', text: 'All → Service Catalog → Catalog Definition → My Order Guides' },
-                        { id: 'd', text: 'All → Incident → Variable Sets' }
-                  ],
-                  correctAnswers: ['b'],
-                  explanation:
-                        'Variable Sets live under Service Catalog → Catalog Variables. "Maintain Items" and "My Order Guides" are under Catalog Definition.',
-                  tags: ['navigation', 'variable-set']
-            },
-            {
-                  id: 'q6',
-                  type: 'single_choice',
-                  question: 'What is a Catalog Variable?',
-                  options: [
-                        { id: 'a', text: 'A question or input field on a catalog form that captures information from the requester' },
-                        { id: 'b', text: 'A global system property that controls the catalog' },
-                        { id: 'c', text: 'A task created to fulfill a Requested Item' },
-                        { id: 'd', text: 'A table that stores all Requests' }
-                  ],
-                  correctAnswers: ['a'],
-                  explanation:
-                        'A Catalog Variable captures information such as a name, date, choice, or description from the requester.',
-                  tags: ['catalog-variable', 'definitions']
-            },
-            {
-                  id: 'q7',
-                  type: 'multiple_choice',
-                  question:
-                        'Which variables were created in the "New Hire Information" variable set? (Select all that apply)',
-                  options: [
-                        { id: 'a', text: 'emp_first_name (Single Line Text)' },
-                        { id: 'b', text: 'outage_summary (Single Line Text)' },
-                        { id: 'c', text: 'emp_last_name (Single Line Text)' },
-                        { id: 'd', text: 'emp_email (Email)' }
-                  ],
-                  correctAnswers: ['a', 'c'],
-                  explanation:
-                        'The set contains emp_first_name and emp_last_name. outage_summary belongs to the Record Producer, and emp_email was not part of the lab.',
-                  tags: ['variable-set', 'lab']
-            },
-            {
-                  id: 'q8',
-                  type: 'single_choice',
-                  question: 'In the variable set, the variables have Order values of 100 and 200. What does the Order field control?',
-                  options: [
-                        { id: 'a', text: 'The sequence in which the variables are displayed on the form' },
-                        { id: 'b', text: 'The priority of the resulting Request' },
-                        { id: 'c', text: 'The number of times a variable may be submitted' },
-                        { id: 'd', text: 'Whether the variable is mandatory' }
-                  ],
-                  correctAnswers: ['a'],
-                  hint: 'Leaving gaps (100, 200, 300…) makes it easy to insert variables later.',
-                  explanation:
-                        'The Order value determines the display sequence of variables. Spacing the values out leaves room to insert new variables in between.',
-                  tags: ['catalog-variable', 'order']
-            },
-            {
-                  id: 'q9',
-                  type: 'true_false',
-                  question: 'Marking a catalog variable as Mandatory means the requester must fill it in before the form can be submitted.',
-                  options: [
-                        { id: 'true', text: 'True' },
-                        { id: 'false', text: 'False' }
-                  ],
-                  correctAnswers: ['true'],
-                  explanation: 'Mandatory variables must have a value before the catalog form can be submitted.',
-                  tags: ['catalog-variable', 'mandatory']
-            },
-            {
-                  id: 'q10',
-                  type: 'single_choice',
-                  question: 'Where do you add individual variables to a variable set?',
-                  options: [
-                        { id: 'a', text: 'In the Rule Base related list' },
-                        { id: 'b', text: 'In the Variables related list of the variable set' },
-                        { id: 'c', text: 'In the Script field of the variable set' },
-                        { id: 'd', text: 'In the Catalog Tasks related list' }
-                  ],
-                  correctAnswers: ['b'],
-                  explanation: 'After saving the variable set, use the Variables related list and click New to create each variable.',
-                  tags: ['variable-set', 'catalog-variable']
-            },
-
-            // ───────────── Step 2: Catalog Items ─────────────
-            {
-                  id: 'q11',
-                  type: 'single_choice',
-                  question: 'What does ordering a standard Catalog Item normally create?',
-                  options: [
-                        { id: 'a', text: 'An Incident (incident)' },
-                        { id: 'b', text: 'Only a Catalog Task (SCTASK)' },
-                        { id: 'c', text: 'A Request (REQ) and a Requested Item (RITM)' },
-                        { id: 'd', text: 'A new Variable Set' }
-                  ],
-                  correctAnswers: ['c'],
-                  explanation: 'Ordering a catalog item normally creates a Request (REQ) and a Requested Item (RITM).',
-                  tags: ['catalog-item', 'req-ritm']
-            },
-            {
-                  id: 'q12',
-                  type: 'single_choice',
-                  question: 'Which navigation path is used to create catalog items in the lab?',
-                  options: [
-                        { id: 'a', text: 'All → Service Catalog → Catalog Definition → Maintain Items' },
-                        { id: 'b', text: 'All → Service Catalog → Catalog Variables → Variable Sets' },
-                        { id: 'c', text: 'All → Service Catalog → Catalog Definition → Record Producers' },
-                        { id: 'd', text: 'All → Service Catalog → Catalog Definition → My Order Guides' }
-                  ],
-                  correctAnswers: ['a'],
-                  explanation: 'Catalog items are managed under Service Catalog → Catalog Definition → Maintain Items.',
-                  tags: ['navigation', 'catalog-item']
-            },
-            {
-                  id: 'q13',
-                  type: 'multiple_choice',
-                  question:
-                        'Which fields did you configure when creating the "Standard Laptop Request" catalog item? (Select all that apply)',
-                  options: [
-                        { id: 'a', text: 'Name' },
-                        { id: 'b', text: 'Catalog' },
-                        { id: 'c', text: 'Table name' },
-                        { id: 'd', text: 'Category' },
-                        { id: 'e', text: 'Short description' }
-                  ],
-                  correctAnswers: ['a', 'b', 'd', 'e'],
-                  explanation:
-                        'Name, Catalog, Category, and Short description were set. "Table name" is a Record Producer setting, not a catalog item setting in this lab.',
-                  tags: ['catalog-item', 'lab']
-            },
-            {
-                  id: 'q14',
-                  type: 'single_choice',
-                  question: 'How do you attach the "New Hire Information" variable set to a catalog item?',
-                  options: [
-                        { id: 'a', text: 'Add a rule to the item\'s Rule Base' },
-                        { id: 'b', text: 'Paste the variable names into the item\'s short description' },
-                        { id: 'c', text: 'Create a Record Producer for the item' },
-                        { id: 'd', text: 'Open the item\'s Variable Sets related list, click Edit, add the set, and save' }
-                  ],
-                  correctAnswers: ['d'],
-                  explanation: 'The Variable Sets related list on the catalog item is used to attach existing variable sets.',
-                  tags: ['catalog-item', 'variable-set']
-            },
-            {
-                  id: 'q15',
-                  type: 'true_false',
-                  question:
-                        'If a catalog item is not visible in the catalog, you should check its availability settings and its catalog/category configuration.',
-                  options: [
-                        { id: 'true', text: 'True' },
-                        { id: 'false', text: 'False' }
-                  ],
-                  correctAnswers: ['true'],
-                  explanation:
-                        'Visibility problems usually come from availability settings or a missing/incorrect catalog or category assignment.',
-                  tags: ['catalog-item', 'troubleshooting']
-            },
-
-            // ───────────── Step 3: Order Guides ─────────────
-            {
-                  id: 'q16',
-                  type: 'single_choice',
-                  question: 'What is an Order Guide?',
-                  options: [
-                        { id: 'a', text: 'A form that creates a record directly in a specified table' },
-                        { id: 'b', text: 'A guided process for ordering multiple related catalog items together' },
-                        { id: 'c', text: 'A workflow that closes Catalog Tasks automatically' },
-                        { id: 'd', text: 'A report listing all Requested Items' }
-                  ],
-                  correctAnswers: ['b'],
-                  explanation:
-                        'An Order Guide walks users through ordering several related items (for example laptop, phone, and accounts for a new hire) in one process.',
-                  tags: ['order-guide', 'definitions']
-            },
-            {
-                  id: 'q17',
-                  type: 'single_choice',
-                  question: 'Which navigation path is used to create an order guide?',
-                  options: [
-                        { id: 'a', text: 'All → Service Catalog → Catalog Variables → Variable Sets' },
-                        { id: 'b', text: 'All → Service Catalog → Catalog Definition → Maintain Items' },
-                        { id: 'c', text: 'All → Service Catalog → Catalog Definition → My Order Guides' },
-                        { id: 'd', text: 'All → Incident → Create New' }
-                  ],
-                  correctAnswers: ['c'],
-                  explanation: 'Order guides are found under Service Catalog → Catalog Definition → My Order Guides.',
-                  tags: ['navigation', 'order-guide']
-            },
-            {
-                  id: 'q18',
-                  type: 'single_choice',
-                  question: 'What does the Rule Base of an order guide contain?',
-                  options: [
-                        { id: 'a', text: 'The Single Line Text variables shown to the requester' },
-                        { id: 'b', text: 'The list of Incidents created by the guide' },
-                        { id: 'c', text: 'The fulfillment tasks for each RITM' },
-                        { id: 'd', text: 'The rules that determine which catalog items are included in the guide' }
-                  ],
-                  correctAnswers: ['d'],
-                  explanation:
-                        'Rule Base rules control item inclusion or selection based on the guide\'s configuration and the user\'s answers.',
-                  tags: ['order-guide', 'rule-base']
-            },
-            {
-                  id: 'q19',
-                  type: 'single_choice',
-                  question: 'What does "Cascade variables" do on an order guide?',
-                  options: [
-                        { id: 'a', text: 'It deletes duplicate variables from child items' },
-                        { id: 'b', text: 'It passes values entered on the order guide to matching variables on the included catalog items' },
-                        { id: 'c', text: 'It converts a Single-Row Variable Set into an MRVS' },
-                        { id: 'd', text: 'It automatically closes the RITMs when the REQ is closed' }
-                  ],
-                  correctAnswers: ['b'],
-                  explanation:
-                        'Cascading lets the employee details entered once on the order guide populate the matching variables on each child item.',
-                  tags: ['order-guide', 'cascade']
-            },
-            {
-                  id: 'q20',
-                  type: 'true_false',
-                  question:
-                        'Cascading works for any variable automatically, even if the variables on the child items are completely different and no configuration is done.',
-                  options: [
-                        { id: 'true', text: 'True' },
-                        { id: 'false', text: 'False' }
-                  ],
-                  correctAnswers: ['false'],
-                  hint: 'Read the definition: "when the variables and configuration support cascading".',
-                  explanation:
-                        'Cascading only works when the variables match and the configuration supports it, which is why the same variable set is attached to the guide and to the child items.',
-                  tags: ['order-guide', 'cascade']
-            },
-            {
-                  id: 'q21',
-                  type: 'multiple_choice',
-                  question:
-                        'After completing the New Employee Onboarding order guide, what should you verify? (Select all that apply)',
-                  options: [
-                        { id: 'a', text: 'A Request (REQ) was created' },
-                        { id: 'b', text: 'The expected Requested Items (RITMs) were created' },
-                        { id: 'c', text: 'A new Incident was created with category "network"' },
-                        { id: 'd', text: 'The employee details are populated on the child items' }
-                  ],
-                  correctAnswers: ['a', 'b', 'd'],
-                  explanation:
-                        'An order guide of catalog items produces a REQ with RITMs, and cascaded employee details should appear on the children. An Incident comes from the Record Producer step.',
-                  tags: ['order-guide', 'verification']
-            },
-            {
-                  id: 'q22',
-                  type: 'multiple_choice',
-                  question:
-                        'Where should the "New Hire Information" variable set be attached for cascading to work as designed? (Select all that apply)',
-                  options: [
-                        { id: 'a', text: 'The New Employee Onboarding order guide' },
-                        { id: 'b', text: 'Standard Laptop Request' },
-                        { id: 'c', text: 'Desk Phone Setup' },
-                        { id: 'd', text: 'The Report Network Outage record producer' }
-                  ],
-                  correctAnswers: ['a', 'b', 'c'],
-                  explanation:
-                        'The set is attached to the order guide and both child items (where supported) so the values can be passed along.',
-                  tags: ['order-guide', 'variable-set', 'cascade']
-            },
-
-            // ───────────── Step 4: Record Producers ─────────────
-            {
-                  id: 'q23',
-                  type: 'single_choice',
-                  question: 'What is a Record Producer?',
-                  options: [
-                        { id: 'a', text: 'A catalog form that creates a record directly in a specified table, such as Incident' },
-                        { id: 'b', text: 'A tool that bundles several catalog items into one order' },
-                        { id: 'c', text: 'A task that tracks fulfillment work for a RITM' },
-                        { id: 'd', text: 'A reusable collection of catalog variables' }
-                  ],
-                  correctAnswers: ['a'],
-                  explanation:
-                        'A Record Producer creates a record directly in a target table instead of following the normal Request / Requested Item process.',
-                  tags: ['record-producer', 'definitions']
-            },
-            {
-                  id: 'q24',
-                  type: 'true_false',
-                  question: 'A Record Producer normally generates a REQ and a RITM when submitted.',
-                  options: [
-                        { id: 'true', text: 'True' },
-                        { id: 'false', text: 'False' }
-                  ],
-                  correctAnswers: ['false'],
-                  explanation:
-                        'A Record Producer creates the target record (for example an Incident) directly and does not normally generate a REQ or RITM.',
-                  tags: ['record-producer', 'req-ritm']
-            },
-            {
-                  id: 'q25',
-                  type: 'single_choice',
-                  question: 'Which table did the "Report Network Outage" record producer target?',
-                  options: [
-                        { id: 'a', text: 'sc_request' },
-                        { id: 'b', text: 'incident' },
-                        { id: 'c', text: 'sc_req_item' },
-                        { id: 'd', text: 'sc_task' }
-                  ],
-                  correctAnswers: ['b'],
-                  explanation: 'The Table name was set to Incident (incident), so each submission creates an Incident record.',
-                  tags: ['record-producer', 'lab']
-            },
-            {
-                  id: 'q26',
-                  type: 'single_choice',
-                  question: 'In a record producer script, what does the `current` object represent?',
-                  options: [
-                        { id: 'a', text: 'The logged-in user' },
-                        { id: 'b', text: 'The variables submitted through the form' },
-                        { id: 'c', text: 'The target record being created (here, the new Incident)' },
-                        { id: 'd', text: 'The parent Request' }
-                  ],
-                  correctAnswers: ['c'],
-                  explanation: '`current` is the record being created in the target table, so `current.urgency = 1` sets the Incident\'s urgency.',
-                  tags: ['record-producer', 'scripting']
-            },
-            {
-                  id: 'q27',
-                  type: 'single_choice',
-                  question: 'In a record producer script, what does `producer.outage_summary` return?',
-                  options: [
-                        { id: 'a', text: 'The value the user entered in the "outage_summary" variable' },
-                        { id: 'b', text: 'The Incident number' },
-                        { id: 'c', text: 'The short description of the record producer itself' },
-                        { id: 'd', text: 'The state of the Catalog Task' }
-                  ],
-                  correctAnswers: ['a'],
-                  explanation: '`producer` gives access to the variables submitted through the record producer.',
-                  tags: ['record-producer', 'scripting']
-            },
-            {
-                  id: 'q28',
-                  type: 'multiple_choice',
-                  question:
-                        'Given the record producer script, which statements are true? (Select all that apply)\n\ncurrent.short_description = producer.outage_summary;\ncurrent.category = \'network\';\ncurrent.urgency = 1;\ncurrent.impact = 1;',
-                  options: [
-                        { id: 'a', text: 'The Incident short description comes from what the user typed' },
-                        { id: 'b', text: 'The Incident category is set to the internal value "network"' },
-                        { id: 'c', text: 'The script creates a Catalog Task for the network team' },
-                        { id: 'd', text: 'Urgency and impact are set to the highest level in a standard configuration' }
-                  ],
-                  correctAnswers: ['a', 'b', 'd'],
-                  explanation:
-                        'The script copies the user\'s text into short_description and sets category, urgency, and impact. It does not create any Catalog Task.',
-                  tags: ['record-producer', 'scripting']
-            },
-            {
-                  id: 'q29',
-                  type: 'single_choice',
-                  question:
-                        'Why must the value assigned to `current.category` match the internal choice value configured for the Incident table?',
-                  options: [
-                        { id: 'a', text: 'Because category is a reference to the sc_cat_item table' },
-                        { id: 'b', text: 'Because the script would fail to compile otherwise' },
-                        { id: 'c', text: 'Because a mismatched value may not map to a valid choice, so the category would not be set as intended' },
-                        { id: 'd', text: 'Because choice values are always identical to the displayed labels' }
-                  ],
-                  correctAnswers: ['c'],
-                  hint: 'Label (what you see) and value (what is stored) are not always the same.',
-                  explanation:
-                        'Choice fields store an internal value, which can differ from the label shown in the UI. Use the value configured on your instance.',
-                  tags: ['record-producer', 'choice-values']
-            },
-            {
-                  id: 'q30',
-                  type: 'true_false',
-                  question: 'In a standard configuration, urgency and impact use numeric choice values, where 1 is the highest.',
-                  options: [
-                        { id: 'true', text: 'True' },
-                        { id: 'false', text: 'False' }
-                  ],
-                  correctAnswers: ['true'],
-                  explanation: 'In the standard configuration, 1 represents the highest urgency and impact.',
-                  tags: ['record-producer', 'choice-values']
-            },
-            {
-                  id: 'q31',
-                  type: 'single_choice',
-                  question: 'How do you verify that the "Report Network Outage" record producer works?',
-                  options: [
-                        { id: 'a', text: 'Open My Requests and look for a new REQ' },
-                        { id: 'b', text: 'Open the Incident list and confirm a new Incident with the expected short description, category, urgency, and impact' },
-                        { id: 'c', text: 'Check the Catalog Tasks related list on the RITM' },
-                        { id: 'd', text: 'Open the order guide\'s Rule Base' }
-                  ],
-                  correctAnswers: ['b'],
-                  explanation: 'The result of a record producer is a record in the target table, here an Incident.',
-                  tags: ['record-producer', 'verification']
-            },
-
-            // ───────────── Step 5: Request Fulfillment ─────────────
-            {
-                  id: 'q32',
-                  type: 'single_choice',
-                  question: 'Which option correctly describes the REQ → RITM → SCTASK hierarchy?',
-                  options: [
-                        { id: 'a', text: 'A REQ contains RITMs; each RITM can have Catalog Tasks (SCTASKs)' },
-                        { id: 'b', text: 'An SCTASK contains RITMs; each RITM can have several REQs' },
-                        { id: 'c', text: 'A RITM contains REQs; each REQ can have SCTASKs' },
-                        { id: 'd', text: 'They are unrelated and independent records' }
-                  ],
-                  correctAnswers: ['a'],
-                  explanation:
-                        'The REQ is the overall request, each RITM is an individual requested item within it, and SCTASKs carry out the fulfillment work for a RITM.',
-                  tags: ['req-ritm-sctask', 'fulfillment']
-            },
-            {
-                  id: 'q33',
-                  type: 'multiple_choice',
-                  question: 'Match the descriptions: which statements are correct? (Select all that apply)',
-                  options: [
-                        { id: 'a', text: 'REQ is the overall request submitted by a user' },
-                        { id: 'b', text: 'RITM is an individual catalog item requested within a REQ' },
-                        { id: 'c', text: 'SCTASK is the overall request submitted by a user' },
-                        { id: 'd', text: 'SCTASK is a task used to carry out fulfillment work, such as preparing a laptop' }
-                  ],
-                  correctAnswers: ['a', 'b', 'd'],
-                  explanation: 'REQ = whole request, RITM = one requested item, SCTASK = a fulfillment task. SCTASK is not the overall request.',
-                  tags: ['req-ritm-sctask', 'definitions']
-            },
-            {
-                  id: 'q34',
-                  type: 'true_false',
-                  question: 'A Catalog Task (SCTASK) is always created automatically for every Requested Item.',
-                  options: [
-                        { id: 'true', text: 'True' },
-                        { id: 'false', text: 'False' }
-                  ],
-                  correctAnswers: ['false'],
-                  explanation:
-                        'A Catalog Task is created only when the item\'s fulfillment process (for example a workflow or Flow Designer flow) is configured to create one.',
-                  tags: ['sctask', 'fulfillment']
-            },
-            {
-                  id: 'q35',
-                  type: 'single_choice',
-                  question: 'The Catalog Tasks related list on your RITM is empty. What should you inspect first?',
-                  options: [
-                        { id: 'a', text: 'The variable set\'s Order values' },
-                        { id: 'b', text: 'The record producer script' },
-                        { id: 'c', text: 'The Incident category choice list' },
-                        { id: 'd', text: 'The catalog item\'s fulfillment configuration (workflow or Flow Designer flow)' }
-                  ],
-                  correctAnswers: ['d'],
-                  explanation:
-                        'Tasks are generated by the fulfillment process. If none exist, the item probably has no workflow or flow that creates them.',
-                  tags: ['sctask', 'troubleshooting']
-            },
-            {
-                  id: 'q36',
-                  type: 'true_false',
-                  question: 'Closing a Catalog Task guarantees that the Requested Item will close automatically.',
-                  options: [
-                        { id: 'true', text: 'True' },
-                        { id: 'false', text: 'False' }
-                  ],
-                  correctAnswers: ['false'],
-                  hint: 'Who defines how task completion affects the RITM?',
-                  explanation:
-                        'The workflow or flow must define how task completion affects the RITM\'s state, so you should never assume it closes automatically.',
-                  tags: ['sctask', 'state-propagation']
-            },
-            {
-                  id: 'q37',
-                  type: 'multiple_choice',
-                  question: 'Which states are given as examples when moving a Catalog Task through its lifecycle? (Select all that apply)',
-                  options: [
-                        { id: 'a', text: 'Work in Progress' },
-                        { id: 'b', text: 'Closed Complete' },
-                        { id: 'c', text: 'Published' },
-                        { id: 'd', text: 'Cascaded' }
-                  ],
-                  correctAnswers: ['a', 'b'],
-                  explanation:
-                        'You might set a task to Work in Progress and later Closed Complete, provided those states are available on your instance.',
-                  tags: ['sctask', 'states']
-            },
-
-            // ───────────── Scenario questions ─────────────
-            {
-                  id: 'q38',
-                  type: 'single_choice',
-                  question:
-                        'Scenario: Users should be able to quickly report an office network outage, and it must land directly as an Incident with no Request/RITM. What do you build?',
-                  options: [
-                        { id: 'a', text: 'A Standard catalog item with a Single-Row Variable Set' },
-                        { id: 'b', text: 'An Order Guide with a Rule Base' },
-                        { id: 'c', text: 'A Multi-Row Variable Set' },
-                        { id: 'd', text: 'A Record Producer targeting the incident table' }
-                  ],
-                  correctAnswers: ['d'],
-                  explanation: 'A Record Producer creates the target record directly, which is exactly this use case.',
-                  tags: ['scenario', 'record-producer']
-            },
-            {
-                  id: 'q39',
-                  type: 'single_choice',
-                  question:
-                        'Scenario: Onboarding a new hire requires a laptop, a phone, and account access, ordered together in one flow. What do you build?',
-                  options: [
-                        { id: 'a', text: 'An Order Guide' },
-                        { id: 'b', text: 'A Record Producer' },
-                        { id: 'c', text: 'A Catalog Task' },
-                        { id: 'd', text: 'A Single-Row Variable Set only' }
-                  ],
-                  correctAnswers: ['a'],
-                  explanation: 'An Order Guide is designed to order multiple related items in one process.',
-                  tags: ['scenario', 'order-guide']
-            },
-            {
-                  id: 'q40',
-                  type: 'single_choice',
-                  question:
-                        'Scenario: Ten catalog items all ask for "Employee First Name" and "Employee Last Name". What is the best way to manage these questions?',
-                  options: [
-                        { id: 'a', text: 'Recreate the two variables manually on each of the ten items' },
-                        { id: 'b', text: 'Create a Single-Row Variable Set and attach it to all ten items' },
-                        { id: 'c', text: 'Create ten Record Producers' },
-                        { id: 'd', text: 'Put the names in each item\'s short description' }
-                  ],
-                  correctAnswers: ['b'],
-                  explanation: 'A shared variable set lets you manage the questions centrally and change them in one place.',
-                  tags: ['scenario', 'variable-set']
-            }
-      ]
+  id: 'servicenow-service-catalog-advanced',
+  title: 'ServiceNow Service Catalog: Design, Trade-offs & Troubleshooting',
+  description:
+    'Advanced, scenario-driven questions on variable sets, catalog items, order guides, record producers and request fulfillment. Focuses on choosing the right construct, predicting behavior and diagnosing problems.',
+  subject: 'ServiceNow',
+  category: 'Service Catalog',
+  difficulty: 'advanced',
+  language: 'en',
+  passingScore: 75,
+  questions: [
+    {
+      id: 'q1',
+      type: 'single_choice',
+      question:
+        'To ship quickly, a team builds a "request new software" form as a record producer that writes into a custom table. Three months later, management wants standard request metrics and task-based fulfillment for it. What is the core problem?',
+      options: [
+        { id: 'a', text: 'Record producers cannot contain variables, so the form cannot capture the software name' },
+        { id: 'b', text: 'Custom tables cannot receive records created from catalog forms' },
+        { id: 'c', text: 'A record producer creates only the target record, so the REQ / RITM lifecycle and catalog fulfillment tasks are not part of it unless it is rebuilt as a catalog item' },
+        { id: 'd', text: 'The record producer must be wrapped in an order guide before it can be reported on' }
+      ],
+      correctAnswers: ['c'],
+      hint: 'Ask what a record producer actually produces.',
+      explanation:
+        'A record producer creates a record directly in a table and normally bypasses the Request / Requested Item process. If the business needs request-style tracking and fulfillment tasks, the right construct is a catalog item.',
+      tags: ['record-producer', 'catalog-item', 'design', 'trade-offs']
+    },
+    {
+      id: 'q2',
+      type: 'single_choice',
+      question:
+        'A shared variable set is used on many items. One item needs a slightly different version of one question than all the others. What is the soundest approach?',
+      options: [
+        { id: 'a', text: 'Edit the shared set so it satisfies the exception, since all items will adapt' },
+        { id: 'b', text: 'Duplicate the whole set for every item so each can diverge freely' },
+        { id: 'c', text: 'Convert the shared set into a Multi-Row Variable Set' },
+        { id: 'd', text: 'Keep what is genuinely common in the shared set and define the divergent question on that item (or in a separate set)' }
+      ],
+      correctAnswers: ['d'],
+      explanation:
+        'Changes to a shared set affect every form that uses it, so the set should hold only what is truly common. Duplicating everything throws away the maintainability benefit; an MRVS solves a different problem entirely.',
+      tags: ['variable-set', 'design', 'maintainability']
+    },
+    {
+      id: 'q3',
+      type: 'multiple_choice',
+      question:
+        'A developer changes the Name (not the Question text) of an existing catalog variable. Which of the following can break or change as a result? (Select all that apply)',
+      options: [
+        { id: 'a', text: 'Scripts that read the variable by its name' },
+        { id: 'b', text: 'Matching of the variable with same-named variables on other forms, such as when values are cascaded' },
+        { id: 'c', text: 'The label the requester sees on the form' },
+        { id: 'd', text: 'The Order in which the variable is displayed' }
+      ],
+      correctAnswers: ['a', 'b'],
+      explanation:
+        'Name is the internal identifier used by scripts and matching logic. The Question text controls the label, and the Order value controls the display sequence, so neither is affected by a Name change.',
+      tags: ['catalog-variable', 'name-vs-question', 'scripting', 'cascade']
+    },
+    {
+      id: 'q4',
+      type: 'single_choice',
+      question:
+        'An order guide cascades values into its child items. Two child items each have a variable named "cost_center", but on one item it means the requester\'s cost center and on the other it means the vendor\'s. What is the key risk?',
+      options: [
+        { id: 'a', text: 'The guide will refuse to submit' },
+        { id: 'b', text: 'A value entered on the guide may flow into a matching variable whose meaning is different from what the requester intended' },
+        { id: 'c', text: 'Both items will be merged into one Requested Item' },
+        { id: 'd', text: 'The variables will automatically be renamed' }
+      ],
+      correctAnswers: ['b'],
+      hint: 'Cascading works by matching variables.',
+      explanation:
+        'Cascading passes values to matching variables when the configuration supports it. Matching is mechanical, not semantic, so identical names with different meanings can silently receive the wrong data.',
+      tags: ['order-guide', 'cascade', 'design', 'risk']
+    },
+    {
+      id: 'q5',
+      type: 'multiple_choice',
+      question:
+        'Which pairings of mechanism and responsibility are correct? (Select all that apply)',
+      options: [
+        { id: 'a', text: 'Rule Base: decides which catalog items an order guide includes, based on the guide\'s setup and the user\'s answers' },
+        { id: 'b', text: 'Cascade variables: decides which catalog items an order guide includes' },
+        { id: 'c', text: 'Variable set: lets common questions be defined once and reused on multiple forms' },
+        { id: 'd', text: 'Fulfillment workflow or flow: determines whether Catalog Tasks are created for a Requested Item' }
+      ],
+      correctAnswers: ['a', 'c', 'd'],
+      explanation:
+        'Cascading only passes values into matching variables; inclusion of items is the job of the Rule Base. Variable sets provide reuse, and fulfillment logic decides whether tasks exist.',
+      tags: ['synthesis', 'rule-base', 'cascade', 'variable-set', 'fulfillment']
+    },
+    {
+      id: 'q6',
+      type: 'single_choice',
+      question:
+        'When a requester orders an item directly, the employee details they type appear on the Requested Item. When ordering the same item through an order guide, the details are blank. Where should the investigation focus?',
+      options: [
+        { id: 'a', text: 'The way values pass from the guide to the item: whether cascading is enabled and whether matching variables exist on both sides' },
+        { id: 'b', text: 'The item\'s short description' },
+        { id: 'c', text: 'The state values available on Catalog Tasks' },
+        { id: 'd', text: 'The Incident choice lists' }
+      ],
+      correctAnswers: ['a'],
+      explanation:
+        'The item works when ordered directly, so its own variables are fine. The difference is the guide-to-item hand-off, which depends on cascading configuration and matching variables.',
+      tags: ['order-guide', 'cascade', 'troubleshooting']
+    },
+    {
+      id: 'q7',
+      type: 'single_choice',
+      question:
+        'A form uses a Multi-Row Variable Set so a manager can list several devices on one order. Each device must be procured and tracked independently by different people. Which statement best captures the design concern?',
+      options: [
+        { id: 'a', text: 'An MRVS automatically creates one Requested Item per row, so there is no concern' },
+        { id: 'b', text: 'An MRVS cannot hold more than one row of data' },
+        { id: 'c', text: 'The rows live as data on a single Requested Item, so independent tracking per device needs separate RITMs or custom fulfillment handling' },
+        { id: 'd', text: 'An MRVS can only be used on order guides' }
+      ],
+      correctAnswers: ['c'],
+      explanation:
+        'An MRVS captures repeating data, but by itself it does not turn each row into its own fulfillment record. If every row needs independent tracking, model it as separate items/RITMs or design the fulfillment logic accordingly.',
+      tags: ['variable-set', 'mrvs', 'fulfillment', 'design']
+    },
+    {
+      id: 'q8',
+      type: 'single_choice',
+      question:
+        'A record producer lets users choose a severity from a drop-down and the script sets the Incident\'s urgency from it. Which implementation is the most robust?',
+      options: [
+        { id: 'a', text: 'Assign the variable\'s displayed text directly to the urgency field' },
+        { id: 'b', text: 'Explicitly map each allowed choice to the target field\'s internal value in the script, with a sensible default for anything unexpected' },
+        { id: 'c', text: 'Leave urgency empty and rely on users to correct it later' },
+        { id: 'd', text: 'Hard-code the highest urgency for every submission' }
+      ],
+      correctAnswers: ['b'],
+      explanation:
+        'Choice fields store internal values that can differ from labels, so an explicit mapping with a default is predictable and safe. Assigning labels directly can fail, and hard-coding the highest value makes every report look critical.',
+      tags: ['record-producer', 'scripting', 'choice-values', 'design']
+    },
+    {
+      id: 'q9',
+      type: 'single_choice',
+      question:
+        'A record producer script works in the development instance but sets the wrong category in production. The script assigns a hard-coded internal choice value. What is the most likely underlying issue?',
+      options: [
+        { id: 'a', text: 'Scripts cannot run in production instances' },
+        { id: 'b', text: 'The `producer` object is unavailable in production' },
+        { id: 'c', text: 'The script depends on the choice list being configured with the same internal values in both instances, and the lists differ' },
+        { id: 'd', text: 'Production automatically converts the category into a string label' }
+      ],
+      correctAnswers: ['c'],
+      explanation:
+        'Hard-coded choice values couple the script to how the field\'s choices are configured. Verify the actual internal values in each instance before relying on them.',
+      tags: ['record-producer', 'choice-values', 'troubleshooting']
+    },
+    {
+      id: 'q10',
+      type: 'multiple_choice',
+      question:
+        'Which of the following can a record producer script legitimately do? (Select all that apply)',
+      options: [
+        { id: 'a', text: 'Set a target field to a constant that the user never entered' },
+        { id: 'b', text: 'Copy a submitted variable into a field of the new record' },
+        { id: 'c', text: 'Combine several submitted variables into one field, such as a description' },
+        { id: 'd', text: 'Convert the new record into a Requested Item with Catalog Tasks by assigning to `producer`' }
+      ],
+      correctAnswers: ['a', 'b', 'c'],
+      explanation:
+        '`current` is the record being created and `producer` exposes the submitted variables, so a script can set constants, copy variables or combine them. Producing REQ/RITM/SCTASK records is not what a record producer does.',
+      tags: ['record-producer', 'scripting', 'current-producer']
+    },
+    {
+      id: 'q11',
+      type: 'single_choice',
+      question:
+        'Two catalog items sit in the same category and share the same variable set. Ordering item A produces Catalog Tasks, but ordering item B produces none. What explains this?',
+      options: [
+        { id: 'a', text: 'Sharing a variable set forces tasks to be created only for the first item' },
+        { id: 'b', text: 'Whether tasks are created depends on each item\'s fulfillment configuration, not on its variables or category' },
+        { id: 'c', text: 'Items in the same category share one task list' },
+        { id: 'd', text: 'Catalog Tasks are only created for the first RITM in a Request' }
+      ],
+      correctAnswers: ['b'],
+      hint: 'What actually creates a Catalog Task?',
+      explanation:
+        'Catalog Tasks are created by the item\'s fulfillment process (for example a workflow or flow). Variables, variable sets and categories do not create tasks.',
+      tags: ['sctask', 'fulfillment', 'troubleshooting']
+    },
+    {
+      id: 'q12',
+      type: 'single_choice',
+      question:
+        'A colleague proposes using an order guide so employees can report a localized outage that should land directly as an Incident. What is the best response?',
+      options: [
+        { id: 'a', text: 'Agree: order guides create the target record directly in any table' },
+        { id: 'b', text: 'Agree, but only if the guide is also given a Multi-Row Variable Set' },
+        { id: 'c', text: 'Disagree: an order guide orchestrates ordering catalog items and results in a REQ with RITMs, whereas a record producer creates the Incident directly' },
+        { id: 'd', text: 'Disagree: Incidents can only be created from the Incident form' }
+      ],
+      correctAnswers: ['c'],
+      explanation:
+        'Order guides bundle catalog items into one ordering experience, producing a Request with Requested Items. Creating a record directly in a table is the purpose of a record producer.',
+      tags: ['order-guide', 'record-producer', 'design']
+    },
+    {
+      id: 'q13',
+      type: 'single_choice',
+      question:
+        'A requester submits one order guide containing three items. Two are fulfilled quickly, the third is delayed. Where is the most precise per-item status visible?',
+      options: [
+        { id: 'a', text: 'On the order guide record, which tracks each item' },
+        { id: 'b', text: 'On the Requested Item (RITM) for each item, since each item is a separate fulfillment record under the one Request' },
+        { id: 'c', text: 'Only on the Request, which merges all items into a single state' },
+        { id: 'd', text: 'On the variable set, which stores item progress' }
+      ],
+      correctAnswers: ['b'],
+      explanation:
+        'The order guide itself is not a fulfillment record. Each included item gets its own RITM beneath the single REQ, and that is where per-item progress lives.',
+      tags: ['order-guide', 'req-ritm', 'fulfillment']
+    },
+    {
+      id: 'q14',
+      type: 'single_choice',
+      question:
+        'A record producer creates an Incident, but the short description is always empty. The script contains `current.short_description = producer.outage_sumary;` while the variable\'s Name is `outage_summary`. What is the root cause?',
+      options: [
+        { id: 'a', text: 'The Question text on the variable is too long' },
+        { id: 'b', text: 'The variable is mandatory' },
+        { id: 'c', text: 'The Incident table does not have a short description field' },
+        { id: 'd', text: 'The script references a variable name that does not match the variable\'s actual Name, so no value is read' }
+      ],
+      correctAnswers: ['d'],
+      explanation:
+        'Scripts reference the variable\'s Name. A typo yields an undefined value rather than the submitted text. The Question text is only a display label.',
+      tags: ['record-producer', 'scripting', 'troubleshooting']
+    },
+    {
+      id: 'q15',
+      type: 'single_choice',
+      question:
+        'An organization needs: (1) a way to report broken equipment so support can triage it, (2) a standard equipment bundle where requester details are typed once and each item is fulfilled separately, and (3) a form where a manager orders accessories for a variable number of named employees. Which mapping of construct to need is best?',
+      options: [
+        { id: 'a', text: '(1) catalog item, (2) record producer, (3) order guide' },
+        { id: 'b', text: '(1) record producer, (2) order guide with a shared variable set and cascading, (3) item using a Multi-Row Variable Set' },
+        { id: 'c', text: '(1) order guide, (2) Multi-Row Variable Set, (3) record producer' },
+        { id: 'd', text: '(1) Single-Row Variable Set, (2) record producer, (3) order guide' }
+      ],
+      correctAnswers: ['b'],
+      explanation:
+        'Direct record creation (Incident) fits a record producer; multiple items fulfilled separately with data entered once fits an order guide with a shared set and cascading; a variable number of rows fits an MRVS.',
+      tags: ['synthesis', 'design', 'order-guide', 'record-producer', 'mrvs']
+    },
+    {
+      id: 'q16',
+      type: 'multiple_choice',
+      question:
+        'Which statements about Catalog Tasks (SCTASK) are accurate? (Select all that apply)',
+      options: [
+        { id: 'a', text: 'Their existence depends on the configured fulfillment logic' },
+        { id: 'b', text: 'A Requested Item can legitimately exist without any Catalog Tasks' },
+        { id: 'c', text: 'Closing every Catalog Task is guaranteed to complete the Requested Item' },
+        { id: 'd', text: 'Creating a variable set automatically adds tasks to the items that use it' }
+      ],
+      correctAnswers: ['a', 'b'],
+      explanation:
+        'Tasks come from the fulfillment process, so some items have none. How task completion affects the RITM is also defined by that process, and variable sets have no relationship to task creation.',
+      tags: ['sctask', 'fulfillment', 'state-propagation']
+    },
+    {
+      id: 'q17',
+      type: 'single_choice',
+      question:
+        'A team numbers the variables in a heavily shared variable set 1, 2, 3, 4. They now need a new variable between the first and second. What is the practical downside of their numbering scheme?',
+      options: [
+        { id: 'a', text: 'The new variable cannot be created at all' },
+        { id: 'b', text: 'The set would become a Multi-Row Variable Set' },
+        { id: 'c', text: 'Inserting between consecutive numbers means renumbering others; leaving gaps (such as 100, 200, 300) avoids this' },
+        { id: 'd', text: 'Order values are ignored for variables in shared sets' }
+      ],
+      correctAnswers: ['c'],
+      explanation:
+        'The Order value controls display sequence. Leaving gaps between values makes later insertions cheap, which matters most for variables that appear on many forms.',
+      tags: ['catalog-variable', 'order', 'maintainability']
+    },
+    {
+      id: 'q18',
+      type: 'single_choice',
+      question:
+        'After building an order guide, which verification best proves the design works end to end?',
+      options: [
+        { id: 'a', text: 'Confirm each catalog item saves without errors' },
+        { id: 'b', text: 'Order through the catalog interface, then check that the REQ has the expected RITMs and that values from the guide appear on the child items' },
+        { id: 'c', text: 'Check that the Rule Base related list is not empty' },
+        { id: 'd', text: 'Confirm the variable set has at least two variables' }
+      ],
+      correctAnswers: ['b'],
+      explanation:
+        'Configuration screens show intent, not behavior. Only an actual order demonstrates which records are produced and whether cascading and rules behave as designed.',
+      tags: ['order-guide', 'verification', 'testing']
+    },
+    {
+      id: 'q19',
+      type: 'true_false',
+      question:
+        'Using an order guide changes the shape of the fulfillment records: each included catalog item still gets its own Requested Item under a single Request.',
+      options: [
+        { id: 'true', text: 'True' },
+        { id: 'false', text: 'False' }
+      ],
+      correctAnswers: ['true'],
+      explanation:
+        'The guide orchestrates the ordering experience, but fulfillment still happens per item through RITMs.',
+      tags: ['order-guide', 'req-ritm']
+    },
+    {
+      id: 'q20',
+      type: 'true_false',
+      question:
+        'A Multi-Row Variable Set, by itself, creates one Requested Item per row entered.',
+      options: [
+        { id: 'true', text: 'True' },
+        { id: 'false', text: 'False' }
+      ],
+      correctAnswers: ['false'],
+      explanation:
+        'An MRVS captures repeating data on the form of the item it is attached to. It does not by itself multiply the fulfillment records.',
+      tags: ['mrvs', 'req-ritm']
+    },
+    {
+      id: 'q21',
+      type: 'true_false',
+      question:
+        'Adding a new variable to a shared variable set requires you to reconfigure every item that already uses the set.',
+      options: [
+        { id: 'true', text: 'True' },
+        { id: 'false', text: 'False' }
+      ],
+      correctAnswers: ['false'],
+      explanation:
+        'The point of a shared set is that the change is made once and is reflected wherever the set is attached.',
+      tags: ['variable-set', 'reuse']
+    },
+    {
+      id: 'q22',
+      type: 'true_false',
+      question:
+        'Attaching the same variable set to two catalog items guarantees that the two items will behave identically during fulfillment.',
+      options: [
+        { id: 'true', text: 'True' },
+        { id: 'false', text: 'False' }
+      ],
+      correctAnswers: ['false'],
+      hint: 'A variable set affects the form, not the process behind it.',
+      explanation:
+        'A variable set shapes the questions on the form. Fulfillment behavior, such as task creation and state handling, is defined separately for each item.',
+      tags: ['variable-set', 'fulfillment']
+    },
+    {
+      id: 'q23',
+      type: 'true_false',
+      question:
+        'Changing a variable\'s Question text does not break scripts that reference the variable by its Name.',
+      options: [
+        { id: 'true', text: 'True' },
+        { id: 'false', text: 'False' }
+      ],
+      correctAnswers: ['true'],
+      explanation:
+        'Question is a display label. Scripts depend on the Name.',
+      tags: ['catalog-variable', 'name-vs-question']
+    },
+    {
+      id: 'q24',
+      type: 'true_false',
+      question:
+        'Because a catalog task is closed as complete, the parent Requested Item must be in a closed state; if it is not, the platform is malfunctioning.',
+      options: [
+        { id: 'true', text: 'True' },
+        { id: 'false', text: 'False' }
+      ],
+      correctAnswers: ['false'],
+      explanation:
+        'How task completion affects the RITM is defined by the workflow or flow. A RITM staying open may be intended (for example, other steps remain) or a gap in the flow\'s logic that needs inspecting.',
+      tags: ['sctask', 'state-propagation', 'troubleshooting']
+    },
+    {
+      id: 'q25',
+      type: 'true_false',
+      question:
+        'A catalog item that is correctly configured and has valid variables can still be unavailable to users because of its availability, catalog or category configuration.',
+      options: [
+        { id: 'true', text: 'True' },
+        { id: 'false', text: 'False' }
+      ],
+      correctAnswers: ['true'],
+      explanation:
+        'Visibility is controlled by where the item is placed and who it is made available to, independent of its variables.',
+      tags: ['catalog-item', 'troubleshooting']
+    }
+  ]
 };
